@@ -1,0 +1,61 @@
+name: CI
+
+# arduino-lint is the same check the Arduino Library Manager bot runs on the
+# registry-submission PR, so passing it here first avoids a rejected PR.
+# compile-sketches builds the examples against the ESP32 core.
+# The version step catches library.json and library.properties drifting apart —
+# they are two separate registries (PlatformIO / Arduino) reading two files.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  arduino-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Arduino Lint (library-manager submit ruleset)
+        uses: arduino/arduino-lint-action@v2
+        with:
+          library-manager: submit
+          compliance: strict
+          project-type: library
+
+  version-consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: library.json and library.properties must agree on version
+        run: |
+          json=$(sed -n 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' library.json | head -1)
+          props=$(sed -n 's/^version=//p' library.properties | head -1)
+          echo "library.json=$json  library.properties=$props"
+          test -n "$json" && test -n "$props" || { echo "::error::version not found"; exit 1; }
+          test "$json" = "$props" || { echo "::error::version mismatch"; exit 1; }
+
+  compile-examples:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        fqbn:
+          - esp32:esp32:m5stack_cores3 # ESP32-S3
+          - esp32:esp32:esp32          # plain ESP32 dev board
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile examples
+        uses: arduino/compile-sketches@v1
+        with:
+          fqbn: ${{ matrix.fqbn }}
+          platforms: |
+            - name: esp32:esp32
+          libraries: |
+            - name: M5Unified
+            - source-path: ./   # this library
+          sketch-paths: |
+            - examples/Minimal_LevelMeter
+            - examples/Generic_I2S_Receiver
+            - examples/M5Core2_Speaker

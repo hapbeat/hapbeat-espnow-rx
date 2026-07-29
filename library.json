@@ -1,0 +1,23 @@
+{
+  "name": "espnow-rx",
+  "version": "0.1.0",
+  "description": "Receive a Hapbeat ESP-NOW audio broadcast on any ESP32 board and play it out over I2S. No pairing, no ACK: every receiver on the transmitter's Wi-Fi channel hears the same stream, so the number of listeners is limited only by radio range. IMA-ADPCM modes work with zero dependencies; Opus modes are opt-in.",
+  "keywords": "hapbeat, haptics, esp32, esp-now, espnow, audio, i2s, streaming, broadcast, adpcm, opus",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hapbeat/hapbeat-espnow-rx.git"
+  },
+  "authors": [
+    { "name": "Hapbeat", "email": "yus988@hapbeat.com", "maintainer": true }
+  ],
+  "license": "MIT",
+  "homepage": "https://devtools.hapbeat.com/",
+  "frameworks": "arduino",
+  "platforms": ["espressif32"],
+  "headers": "HapbeatEspNowRx.h",
+  "examples": [
+    { "name": "Minimal_LevelMeter", "base": "examples/Minimal_LevelMeter", "files": ["Minimal_LevelMeter.ino"] },
+    { "name": "Generic_I2S_Receiver", "base": "examples/Generic_I2S_Receiver", "files": ["Generic_I2S_Receiver.ino"] },
+    { "name": "M5ModuleAudio_Speaker", "base": "examples/M5ModuleAudio_Speaker", "files": ["M5ModuleAudio_Speaker.ino"] }
+  ]
+}

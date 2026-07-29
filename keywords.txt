@@ -1,0 +1,68 @@
+#######################################
+# Syntax coloring for the HapbeatEspNowRx library
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+HapbeatEspNowRx	KEYWORD1
+RxConfig	KEYWORD1
+StreamStats	KEYWORD1
+DecoderOptions	KEYWORD1
+FrameSink	KEYWORD1
+JitterRing	KEYWORD1
+I2sSink	KEYWORD1
+I2sPins	KEYWORD1
+StreamDecoder	KEYWORD1
+EspNowTransport	KEYWORD1
+OpusBackend	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+begin	KEYWORD2
+end	KEYWORD2
+tick	KEYWORD2
+pump	KEYWORD2
+setChannel	KEYWORD2
+channel	KEYWORD2
+setGain	KEYWORD2
+gain	KEYWORD2
+forceRelock	KEYWORD2
+setRelayTestOnly	KEYWORD2
+locked	KEYWORD2
+mode	KEYWORD2
+modeName	KEYWORD2
+modeInfo	KEYWORD2
+modeSupported	KEYWORD2
+suggestedBufferMs	KEYWORD2
+stats	KEYWORD2
+setLogger	KEYWORD2
+onFleetVolumeMax	KEYWORD2
+onLockChanged	KEYWORD2
+onModeChanged	KEYWORD2
+onPcmTap	KEYWORD2
+readFrames	KEYWORD2
+instance	KEYWORD2
+GenericI2S	KEYWORD2
+NoAudio	KEYWORD2
+opusAvailable	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+MODE_SOLID	LITERAL1
+MODE_FAST	LITERAL1
+MODE_BALANCED	LITERAL1
+MODE_SMOOTH	LITERAL1
+MODE_STEREO	LITERAL1
+MODE_HIFI	LITERAL1
+MODE_LITE	LITERAL1
+MODE_TURBO	LITERAL1
+MODE_FINE	LITERAL1
+MODE_SOLID48	LITERAL1
+OUTPUT_RATE	LITERAL1
+RSSI_UNKNOWN	LITERAL1
+PKT_STREAM	LITERAL1
+PKT_FLEET_TUNE	LITERAL1
+HAPBEAT_ESPNOW_RX_OPUS	LITERAL1

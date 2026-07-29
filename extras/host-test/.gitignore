@@ -1,0 +1,4 @@
+*.o
+*.d
+host-test
+host-test.exe

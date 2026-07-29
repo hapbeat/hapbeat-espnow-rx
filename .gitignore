@@ -1,0 +1,23 @@
+# Build artifacts
+.pio/
+build/
+*.o
+*.bin
+*.elf
+
+# Host tests (extras/host-test) build output
+extras/host-test/build/
+extras/host-test/*.exe
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dev-only files live in the workspace (private), per repo policy:
+#   hapbeat-sdk-workspace/subrepo-devs/espnow-rx/
+CLAUDE.md
+instructions/
+.claude/
+dev-notes/
