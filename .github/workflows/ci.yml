@@ -36,6 +36,8 @@ jobs:
           test -n "$json" && test -n "$props" || { echo "::error::version not found"; exit 1; }
           test "$json" = "$props" || { echo "::error::version mismatch"; exit 1; }
 
+  # The board-independent examples build everywhere and need no third-party
+  # library, which is also the proof that the library itself has no dependency.
   compile-examples:
     runs-on: ubuntu-latest
     strategy:
@@ -53,9 +55,38 @@ jobs:
           platforms: |
             - name: esp32:esp32
           libraries: |
-            - name: M5Unified
             - source-path: ./   # this library
           sketch-paths: |
             - examples/Minimal_LevelMeter
             - examples/Generic_I2S_Receiver
-            - examples/M5Core2_Speaker
+
+  # The M5 example is built separately: it is the only one with third-party
+  # dependencies, and it only makes sense on an M5 board.
+  compile-m5-example:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile M5 Module Audio example
+        uses: arduino/compile-sketches@v1
+        with:
+          fqbn: esp32:esp32:m5stack_cores3
+          platforms: |
+            - name: esp32:esp32
+          libraries: |
+            - name: M5Unified
+            - source-url: https://github.com/m5stack/M5Module-Audio.git
+            - source-path: ./
+          sketch-paths: |
+            - examples/M5ModuleAudio_Speaker
+
+  # Runs the protocol/codec regression suite on the host. This is what pins the
+  # wire format (notably the one-byte Opus length field, which the contracts
+  # spec still documents as uint16) and it also enforces that src/protocol and
+  # src/codec stay free of Arduino.h / esp_now.h / millis().
+  host-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and run host tests
+        working-directory: extras/host-test
+        run: make
